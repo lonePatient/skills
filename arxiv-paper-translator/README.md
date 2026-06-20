@@ -1,4 +1,4 @@
-# arXiv Paper Translator（ChineseXiv）
+# arXiv Paper Translator
 
 将 arXiv 论文的 LaTeX 源码自动翻译为中文 PDF，同时保留英文原文 PDF 与翻译源码，方便对照与手动重编。
 
