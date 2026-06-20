@@ -1,0 +1,11 @@
+# arXiv Paper Translator 依赖
+# 安装：pip install -r requirements.txt
+
+# 在线编译引擎必需
+requests>=2.28.0
+
+# 可选：编译后检测 PDF 中是否残留未解析引用标记（?? / [?]）
+pypdf>=3.0.0
+
+# 可选：排版自检时将 PDF 页面渲染为 PNG 进行目视检查
+PyMuPDF>=1.21.0

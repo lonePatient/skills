@@ -19,6 +19,7 @@ skills/
 | Skill | 说明 | 触发方式 |
 |-------|------|---------|
 | [paper-deconstruct](./paper-deconstruct) | 面向工程复现与批判性思维的论文分析引擎，6 阶段流水线生成 13 章节技术解构报告 | 提供 arXiv URL/ID、PDF、LaTeX 目录或论文标题，或「读论文 / 论文解析 / 技术总结」 |
+| [arxiv-paper-translator](./arxiv-paper-translator) | 将 arXiv 论文 LaTeX 源码译为中文并编译为 PDF，支持本地 xelatex 与在线编译双引擎、英文原文 `_zh` 副本对照、多篇并行处理 | 提供论文标题或 arXiv ID，或说「翻译论文 / 我想读中文版」 |
 
 ## 使用方式
 

@@ -19,6 +19,7 @@ skills/
 | Skill | Description | Trigger |
 |-------|-------------|---------|
 | [paper-deconstruct](./paper-deconstruct) | Engineering-first, critical-thinking paper analysis engine; a 6-stage pipeline producing a 13-section technical deconstruction report | Provide an arXiv URL/ID, PDF, LaTeX directory, or paper title, or say "read paper / analyze paper / 论文解析" |
+| [arxiv-paper-translator](./arxiv-paper-translator) | Translates an arXiv paper's LaTeX source into Chinese and compiles it to PDF; supports both local xelatex and online compilation, English-original `_zh` side-by-side copies, and parallel batch processing | Provide a paper title or arXiv ID, or say "translate paper / 我想读中文版" |
 
 ## Usage
 

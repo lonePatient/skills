@@ -1,0 +1,88 @@
+name: arxiv-paper-translator
+version: "1.1.0"
+description: >
+  把 arXiv 论文自动翻译为中文 PDF 的 arxiv-paper-translator skill（原 ChineseXiv）。
+  用户提供论文标题或 arXiv ID、说「翻译论文」「我想读中文版」等时立即使用。
+  支持本地 xelatex 与在线编译双引擎、英文原文 _zh 副本对照、多篇并行处理。
+  每篇论文文件夹同时保留英文原文 PDF 与中文译文 PDF。无需用户手动操作。
+
+triggers:
+  keywords:
+    - "翻译论文"
+    - "我想读中文版"
+    - "arXiv 翻译"
+    - "中文 PDF"
+    - "arXiv Paper Translator"
+    - "ChineseXiv"  # 历史兼容触发词
+  patterns:
+    - "arxiv.org/abs/\\d+\\.\\d+"
+    - "\\d{4}\\.\\d{5}"
+  intent_hints:
+    - 用户给出 arXiv URL 或 ID
+    - 用户给出论文标题并要求翻译
+    - 用户希望获得论文的中文 PDF
+
+input:
+  required:
+    - paper_id_or_title: "arXiv ID（如 1706.03762）或论文标题"
+  optional:
+    - output_dir: "论文存放的父目录，默认为当前工作目录或用户指定路径"
+    - engine: "auto（默认）| local | online，控制编译引擎"
+    - scope: "full（默认）| body，控制翻译范围是否包含附录"
+    - parallel: "布尔值，是否并行处理多篇论文；默认 false"
+
+output:
+  artifacts:
+    - "{OUTPUT_DIR}/{PAPER_ID}-{PDF_NAME_ZH}.pdf": "中文译文 PDF"
+    - "{OUTPUT_DIR}/{PDF_NAME_EN}.pdf": "英文原文 PDF（优先 arXiv 官方 PDF；拿不到时由本地编译英文源码所得）"
+    - "{OUTPUT_DIR}/source/": "源码目录，含英文原文 .tex + 中文 _zh.tex 译稿"
+  stdout_contract:
+    - "WORK_DIR=<源码目录绝对路径>"
+    - "MAIN_TEX=<英文原始主文件相对路径>"
+    - "MAIN_TEX_ZH=<中文主文件相对路径>"
+    - "PDF_NAME=<论文英文标题备用名>"
+    - "PDF_NAME_EN=<英文原文 PDF 安全文件名>"
+    - "PDF_EN=<已下载英文 PDF 绝对路径或空字符串>"
+
+dependencies:
+  python:
+    - ">=3.10"
+  python_packages:
+    - requests: "在线编译引擎必需"
+    - pypdf: "可选，用于检测 PDF 未解析引用标记"
+    - PyMuPDF: "可选，用于排版自检时渲染页面为 PNG"
+  system:
+    - xelatex: "本地编译必需；缺失时 --engine auto 自动回落到在线引擎"
+  external_services:
+    - arxiv.org: "下载源码与官方 PDF"
+    - export.arxiv.org: "官方 PDF 下载镜像"
+    - arxiv.org/api: "获取论文英文标题"
+    - latex.ytotech.com: "在线编译服务（在线引擎 / auto 回落时使用）"
+
+permissions:
+  network: true
+  filesystem:
+    scope: "用户指定的输出目录及其子目录"
+    writes: ["创建论文子目录、下载源码、写入 PDF"]
+    reads: ["读取下载的源码、读取辅助 .bbl 文件"]
+  privacy_notice: >
+    使用 --engine online 时，论文完整 LaTeX 源码会被上传到 latex.ytotech.com 进行编译。
+    若论文包含敏感或尚未公开的内容，请使用 --engine local 或确保环境可信。
+
+execution:
+  mode: sequential
+  parallel_support: true
+  steps:
+    - "1. 确定论文 ID"
+    - "2. 获取源码并准备 _zh 翻译副本"
+    - "3. 翻译中文内容并自检"
+    - "4. 编译、修表、目检、清理"
+
+references:
+  - references/table-overflow.md
+  - references/framed-content.md
+  - references/compile-errors.md
+  - references/author-block.md
+
+maintainers: []
+license: "MIT or as specified by repository owner"
