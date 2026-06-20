@@ -1,6 +1,6 @@
 # Skills (English)
 
-A personal collection of [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills). Each subdirectory is a standalone skill following the `SKILL.md` + optional `scripts/`, `references/`, `examples/` layout — ready to reuse or to use as scaffolding for new skills.
+A personal collection of commonly used skills. Each subdirectory is a standalone skill following the `SKILL.md` + optional `scripts/`, `references/`, `examples/` layout — ready to reuse or to use as scaffolding for new skills.
 
 ## Directory Layout
 

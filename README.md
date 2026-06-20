@@ -1,6 +1,6 @@
 # Skills
 
-个人常用的 [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills) 合集。每个子目录是一个独立 skill，遵循 `SKILL.md` + 可选 `scripts/`、`references/`、`examples/` 的结构，可直接复用或作为新 skill 的脚手架。
+个人常用的 skill 汇总。每个子目录是一个独立 skill，遵循 `SKILL.md` + 可选 `scripts/`、`references/`、`examples/` 的结构，可直接复用或作为新 skill 的脚手架。
 
 ## 目录结构
 
