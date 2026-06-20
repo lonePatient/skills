@@ -1,0 +1,62 @@
+skill:
+  name: paper-deconstruct
+  version: 1.1.0
+  mode: production
+  language: zh-CN
+
+description: |
+  当用户需要分析 arXiv 或顶级会议论文时，生成结合工程复现与批判性思维的深度技术解构报告。
+  触发词包括 "read paper", "analyze paper", "论文研读", "技术总结", "论文解析", "读论文", "分析论文"，
+  或提供 LaTeX 源码、PDF、arXiv URL。
+
+triggers:
+  - arxiv_url
+  - arxiv_id
+  - pdf_file
+  - latex_directory
+  - paper_title
+  - "read paper"
+  - "analyze paper"
+  - "论文研读"
+  - "技术总结"
+  - "论文解析"
+  - "读论文"
+  - "分析论文"
+
+input:
+  type: paper_source
+  accepted_formats:
+    - arxiv_url
+    - arxiv_id
+    - paper_title
+    - latex_directory
+    - pdf_file
+  requirements:
+    - full_latex_source_preferred
+    - abstract_only_marked_provisional
+
+output:
+  type: markdown_report
+  naming_convention: "{YYYY-MM-DD}-{title}.md"
+  language: zh-CN
+  technical_terms: english_preserved
+  file_structure:
+    - 01-parse.md
+    - 02-insights.md
+    - 03-draft.md
+    - 03-research-notes.md
+    - 03.5-validation.md
+    - 04-critique.md
+    - 05-revision.md
+    - figure_map.json
+    - "{YYYY-MM-DD}-{title}.md"
+
+pipeline:
+  stages:
+    - {name: parse, output: 01-parse.md}
+    - {name: insights, output: 02-insights.md}
+    - {name: draft, output: 03-draft.md}
+    - {name: self_check, output: 03.5-validation.md}
+    - {name: critique, output: 04-critique.md}
+    - {name: revision, output: 05-revision.md}
+    - {name: polish, output: "{YYYY-MM-DD}-{title}.md"}
